@@ -1,12 +1,12 @@
 package dto;
 
 public class ContentsDto {
-	String contentsId;
-	String userId;
-	String title;
-	String description;
-	int views;
-	int likes;
+	private String contentsId;
+	private String userId;
+	private String title;
+	private String description;
+	private int views;
+	private int likes;
 	
 	public String getContentsId() {
 		return contentsId;
