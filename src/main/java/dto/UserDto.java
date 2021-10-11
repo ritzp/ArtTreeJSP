@@ -3,6 +3,9 @@ package dto;
 import java.io.File;
 import java.io.ByteArrayOutputStream;
 import javax.imageio.ImageIO;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.awt.image.BufferedImage;
 import java.util.Base64;
 
@@ -62,10 +65,10 @@ public class UserDto {
 		this.introduction = introduction;
 	}
 	
-	public String getIcon() {
+	public String getIcon(HttpServletRequest request) {
 		String encoded = null;
 		try {
-			File source = new File("D:\\Creators_data\\user\\icons\\" + userId + ".png");
+			File source = new File(request.getServletContext().getRealPath("/data/user/icon/" + userId + ".png"));
 			BufferedImage image = ImageIO.read(source);
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -80,10 +83,10 @@ public class UserDto {
 		return encoded;
 	}
 	
-	public String getHeader() {
+	/*public String getHeader(HttpServletRequest request) {
 		String encoded = null;
 		try {
-			File source = new File("D:\\Creators_data\\user\\headers\\" + userId + ".jpg");
+			File source = new File(request.getServletContext().getRealPath("/data/user/header/" + userId + ".jpg"));
 			BufferedImage image = ImageIO.read(source);
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -96,5 +99,5 @@ public class UserDto {
 			e.printStackTrace();
 		}
 		return encoded;
-	}
+	}*/
 }
