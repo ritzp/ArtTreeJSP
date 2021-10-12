@@ -11,16 +11,16 @@ import dto.UserDto;
 public class UserDao {
 	Connection conn = DBConnection.getConnection();
 	
-	public int insert(String userId, String email, String phoneNumber, String password, String nickname, String introduction) {
+	public int insert(UserDto dto) {
 		String sql = "insert into creators_user values (?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
-			stat.setString(1, userId);
-			stat.setString(2, email);
-			stat.setString(3, phoneNumber);
-			stat.setString(4, password);
-			stat.setString(5, nickname);
-			stat.setString(6, introduction);
+			stat.setString(1, dto.getUserId());
+			stat.setString(2, dto.getEmail());
+			stat.setString(3, dto.getPhoneNumber());
+			stat.setString(4, dto.getPassword());
+			stat.setString(5, dto.getNickname());
+			stat.setString(6, dto.getIntroduction());
 			return stat.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -52,7 +52,7 @@ public class UserDao {
 		return null;
 	}
 	
-	public UserDto selectForLogin(String id, String password) {
+	public UserDto selectForSignIn(String id, String password) {
 		String sql = "select * from creators_user where (userId=? or email=? or phoneNumber=?) and password=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);

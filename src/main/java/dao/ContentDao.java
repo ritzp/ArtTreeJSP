@@ -168,6 +168,31 @@ public class ContentDao {
 		return null;
 	}
 	
+	public ArrayList<ContentDto> selectForList() {
+		String sql = "select * from content limit 50";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			//stat.setString(1, userId);
+			ResultSet result = stat.executeQuery();
+			
+			ArrayList<ContentDto> list = new ArrayList<>();
+			while (result.next()) {
+				ContentDto dto = new ContentDto();
+				dto.setContentId(result.getString(1));
+				dto.setExtension(result.getString(2));
+				dto.setTitle(result.getString(3));
+				dto.setDescription(result.getString(4));
+				dto.setViews(result.getInt(5));
+				dto.setUserId(result.getString(6));
+				list.add(dto);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public int selectForUploadedcontent(String userId) {
 		String sql = "select count(*) from content where userId=?";
 		try {

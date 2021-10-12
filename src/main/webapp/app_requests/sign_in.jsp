@@ -3,20 +3,25 @@
 <%@ page import="dto.UserDto" %>
 <%@ page import="org.json.simple.JSONArray" %>
 <%@ page import="org.json.simple.JSONObject" %>
-<%@ page import="java.util.Enumeration" %>
 <%
 if (request.getMethod().equals("POST")) {
+	UserDao userDao = new UserDao();
+	UserDto userDto = new UserDto();
+	JSONObject jsonObject = new JSONObject();
 	try {
-		UserDao userDao = new UserDao();
-		UserDto userDto = new UserDto();
-		userDto = userDao.selectForLogin(request.getParameter("id"), request.getParameter("password"));
+		userDto = userDao.selectForSignIn(request.getParameter("id"), request.getParameter("password"));
+		if (userDto != null) {
+			jsonObject.put("message", "SUCCESS");
+			jsonObject.put("userId", userDto.getUserId());
+			jsonObject.put("password", userDto.getPassword());
 			
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("userId", userDto.getUserId());
-		jsonObject.put("password", userDto.getPassword());
+			out.print(jsonObject);
+		} else {			
+			jsonObject.put("message", "FAILED");
 			
-		out.print(jsonObject);
-	} catch(Exception e) {
+			out.print(jsonObject);
+		}
+	} catch (Exception e) {
 		out.print("SERVER ERROR");
 		e.printStackTrace();
 	}
