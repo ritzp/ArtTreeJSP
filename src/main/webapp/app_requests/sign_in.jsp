@@ -14,6 +14,7 @@ if (request.getMethod().equals("POST")) {
 			jsonObject.put("message", "SUCCESS");
 			jsonObject.put("userId", userDto.getUserId());
 			jsonObject.put("password", userDto.getPassword());
+			jsonObject.put("nickname", userDto.getNickname());
 			
 			out.print(jsonObject);
 		} else {			

@@ -94,4 +94,16 @@ public class UserDao {
 		}
 		return 0;
 	}
+	
+	public int delete(String userId) {
+		String sql = "delete from creators_user where userId=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, userId);
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

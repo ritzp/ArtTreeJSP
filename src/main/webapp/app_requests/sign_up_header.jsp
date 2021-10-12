@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="dao.UserDao" %>
 <%@ page import="dto.UserDto" %>
-<%@ page import="org.json.simple.JSONArray" %>
-<%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="java.io.*" %>
 <%
 if (request.getMethod().equals("POST")) {
