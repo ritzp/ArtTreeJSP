@@ -1,10 +1,19 @@
 package dto;
 
 public class CommentDto {
+	private int commentId;
 	private String contentId;
 	private String userId;
 	private String comment;
 	
+	public int getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(int commentId) {
+		this.commentId = commentId;
+	}
+
 	public String getContentId() {
 		return contentId;
 	}

@@ -33,16 +33,17 @@ if (request.getMethod().equals("POST")) {
 	String description = request.getParameter("description");
 	String userId = request.getParameter("userId");
 		
-	System.out.println("/data/content/" + category + "/" + contentId + "." + extension);
-		
-	File file = new File(request.getServletContext().getRealPath("/data/content/" + category + "/" + contentId + "." + extension));
-	while (file.exists()) {
-		number++;
-		contentId = category + "/" + type + date + number;
-		file = new File(request.getServletContext().getRealPath("/data/content/" + category + "/" + contentId + "." + extension));
-	}
-		
-	try {         
+	try {
+		ContentDao contentDao = new ContentDao();
+		ContentDto contentDto = contentDao.select(contentId);
+		while (contentDto.getContentId() != null) {
+			number++;
+			contentId = type + date + number;
+			contentDto = contentDao.select(contentId);
+		}
+		File file = new File(request.getServletContext().getRealPath("/data/content/" + category + "/" + contentId + "." + extension));
+		System.out.println("/data/content/" + category + "/" + contentId + "." + extension);
+       
 		Part part = request.getPart("file");
 			
 		InputStream is = part.getInputStream();
@@ -72,6 +73,6 @@ if (request.getMethod().equals("POST")) {
 	contentDto.setUserId(userId);
 	contentDao.insert(contentDto);
 } else {
-	out.print("ACCESS FAILED");
+	out.print("ACCESS DENIED");
 }
 %>

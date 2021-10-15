@@ -6,17 +6,17 @@ if (request.getMethod().equals("POST")) {
 	UserDao userDao = new UserDao();
 	UserDto userDto = new UserDto();
 	try {
-		userDto = userDao.select(request.getParameter("userId"));
-		if (userDto != null) {			
+		userDto = userDao.select(request.getParameter("id"));
+		if (userDto.getUserId() != null) {			
 			out.print("EXISTS");
 		} else {				
-			out.print("NOT EXISTS");
+			out.print("AVAILABLE");
 		}
 	} catch (Exception e) {
 		out.print("SERVER ERROR");
 		e.printStackTrace();
 	}
 } else {
-	out.print("ACCESS FAILED");
+	out.print("ACCESS DENIED");
 }
 %>

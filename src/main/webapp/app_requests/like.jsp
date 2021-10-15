@@ -29,6 +29,6 @@ if (request.getMethod().equals("POST")) {
 	}
 	
 } else {
-	out.print("ACCESS FAILED");
+	out.print("ACCESS DENIED");
 }
 %>

@@ -24,6 +24,6 @@ if (request.getMethod().equals("POST")) {
 	userDao.insert(userDto);
 	out.print("SUCCESS");
 } else {
-	out.print("ACCESS FAILED");
+	out.print("ACCESS DENIED");
 }
 %>

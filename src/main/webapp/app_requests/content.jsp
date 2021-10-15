@@ -27,7 +27,7 @@ if (request.getMethod().equals("POST")) {
 		likeDto.setUserId(request.getParameter("userId"));
 		likeDto.setContentId(contentDto.getContentId());
 		boolean isLiked = likeDao.isLiked(likeDto);
-		commentArray = commentDao.select(contentDto.getContentId(), contentDto.getUserId());
+		commentArray = commentDao.select(contentDto.getContentId());
 	
 		JSONObject jsonObject = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
@@ -60,8 +60,9 @@ if (request.getMethod().equals("POST")) {
 		
 			JSONObject __jsonObject = new JSONObject();
 	
+			__jsonObject.put("commentId",commentArray.get(i).getCommentId());
+			__jsonObject.put("userId", __userDto.getUserId());
 			__jsonObject.put("nickname", __userDto.getNickname());
-			__jsonObject.put("icon", __userDto.getIcon(request));
 			__jsonObject.put("comment", commentArray.get(i).getComment());
 			_jsonArray.add(__jsonObject);					
 		}
@@ -73,6 +74,6 @@ if (request.getMethod().equals("POST")) {
 		e.printStackTrace();
 	}
 } else {
-	out.print("ACCESS FAILED");
+	out.print("ACCESS DENIED");
 }
 %>

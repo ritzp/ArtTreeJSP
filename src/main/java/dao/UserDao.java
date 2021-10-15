@@ -12,15 +12,14 @@ public class UserDao {
 	Connection conn = DBConnection.getConnection();
 	
 	public int insert(UserDto dto) {
-		String sql = "insert into creators_user values (?, ?, ?, ?, ?, ?)";
+		String sql = "insert into creators_user values (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, dto.getUserId());
 			stat.setString(2, dto.getEmail());
-			stat.setString(3, dto.getPhoneNumber());
-			stat.setString(4, dto.getPassword());
-			stat.setString(5, dto.getNickname());
-			stat.setString(6, dto.getIntroduction());
+			stat.setString(3, dto.getPassword());
+			stat.setString(4, dto.getNickname());
+			stat.setString(5, dto.getIntroduction());
 			return stat.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -29,21 +28,21 @@ public class UserDao {
 		return 0;
 	}
 	
-	public UserDto select(String userId) {
-		String sql = "select * from creators_user where userId=?";
+	public UserDto select(String id) {
+		String sql = "select * from creators_user where (userId=? or email=?)";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
-			stat.setString(1, userId);
+			stat.setString(1, id);
+			stat.setString(2, id);
 			ResultSet result = stat.executeQuery();
 			
 			UserDto dto = new UserDto();
 			while (result.next()) {
 				dto.setUserId(result.getString(1));
 				dto.setEmail(result.getString(2));
-				dto.setPhoneNumber(result.getString(3));
-				dto.setPassword(result.getString(4));
-				dto.setNickname(result.getString(5));
-				dto.setIntroduction(result.getString(6));
+				dto.setPassword(result.getString(3));
+				dto.setNickname(result.getString(4));
+				dto.setIntroduction(result.getString(5));
 			}
 			return dto;
 		} catch (SQLException e) {
@@ -53,23 +52,21 @@ public class UserDao {
 	}
 	
 	public UserDto selectForSignIn(String id, String password) {
-		String sql = "select * from creators_user where (userId=? or email=? or phoneNumber=?) and password=?";
+		String sql = "select * from creators_user where (userId=? or email=?) and password=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, id);
 			stat.setString(2, id);
-			stat.setString(3, id);
-			stat.setString(4, password);
+			stat.setString(3, password);
 			ResultSet result = stat.executeQuery();
 
 			UserDto dto = new UserDto();
 			if (result.next()) {
 				dto.setUserId(result.getString(1));
 				dto.setEmail(result.getString(2));
-				dto.setPhoneNumber(result.getString(3));
-				dto.setPassword(result.getString(4));
-				dto.setNickname(result.getString(5));
-				dto.setIntroduction(result.getString(6));
+				dto.setPassword(result.getString(3));
+				dto.setNickname(result.getString(4));
+				dto.setIntroduction(result.getString(5));
 				return dto;
 			} else {
 				dto = null;
@@ -79,6 +76,25 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public int selectForDeleteAccount(String userId, String password) {
+		String sql = "select count(*) from creators_user where userId=? and password=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, userId);
+			stat.setString(2, password);
+			ResultSet result = stat.executeQuery();
+
+			int count = 0;
+			while (result.next()) {
+				count = result.getInt(1);
+			}
+			return count;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
 	public int updateFromMyPageEdit(String userId, String nickname, String introduction) {

@@ -71,7 +71,30 @@ public class ContentDao {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setInt(1, value);
 			stat.setString(2, contentId);
-			System.out.println(stat.toString());
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int delete(String contentId) {
+		String sql = "delete from content where contentId=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, contentId);
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int deleteForAccountDelete(String userId) {
+		String sql = "delete from content where userId=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, userId);
 			return stat.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
