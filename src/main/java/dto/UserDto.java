@@ -64,40 +64,4 @@ public class UserDto {
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
 	}
-	
-	public String getIcon(HttpServletRequest request) {
-		String encoded = null;
-		try {
-			File source = new File(request.getServletContext().getRealPath("/data/user/icon/" + userId + ".png"));
-			BufferedImage image = ImageIO.read(source);
-			
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(image, "png", baos);
-			baos.flush();
-			
-			byte[] imageByte = baos.toByteArray();
-			encoded = Base64.getEncoder().encodeToString(imageByte);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return encoded;
-	}
-	
-	/*public String getHeader(HttpServletRequest request) {
-		String encoded = null;
-		try {
-			File source = new File(request.getServletContext().getRealPath("/data/user/header/" + userId + ".jpg"));
-			BufferedImage image = ImageIO.read(source);
-			
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(image, "jpg", baos);
-			baos.flush();
-			
-			byte[] imageByte = baos.toByteArray();
-			encoded = Base64.getEncoder().encodeToString(imageByte);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return encoded;
-	}*/
 }

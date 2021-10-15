@@ -48,7 +48,6 @@ if (request.getMethod().equals("POST")) {
 		_jsonObject.put("likes", likeDao.getLikes(contentDto.getContentId()));
 		_jsonObject.put("userId", contentDto.getUserId());
 		_jsonObject.put("nickname", userDto.getNickname());
-		_jsonObject.put("icon", userDto.getIcon(request));
 		_jsonObject.put("isLiked", isLiked);
 		_jsonObject.put("comments", commentArray.size());
 		jsonArray.add(_jsonObject);
