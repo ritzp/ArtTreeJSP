@@ -111,6 +111,32 @@ public class UserDao {
 		return 0;
 	}
 	
+	public int updateForChangingEmail(String userId, String email) {
+		String sql = "update creators_user set email=? where userId=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, email);
+			stat.setString(2, userId);
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int updateForChangingPassword(String userId, String newPassword) {
+		String sql = "update creators_user set password=? where userId=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, newPassword);
+			stat.setString(2, userId);
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public int delete(String userId) {
 		String sql = "delete from creators_user where userId=?";
 		try {
