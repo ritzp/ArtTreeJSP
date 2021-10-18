@@ -103,7 +103,7 @@ public class ContentDao {
 	}
 	
 	public ArrayList<ContentDto> selectForListByKeyword(String keyword) {
-		String sql = "select * from content where concat(title, description, userId) like \"%" + keyword + "%\"";
+		String sql = "select * from content where concat(title, description, nickname) like \"%" + keyword + "%\"";
 		System.out.println(sql);
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);

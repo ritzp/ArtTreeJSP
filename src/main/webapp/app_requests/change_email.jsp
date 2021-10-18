@@ -6,6 +6,7 @@ if (request.getMethod().equals("POST")) {
 	UserDao userDao = new UserDao();
 	try {
 		userDao.updateForChangingEmail(request.getParameter("userId"), request.getParameter("email"));
+		System.out.println("Changed Email - " + request.getParameter("userId"));
 		out.print("SUCCESS");
 	} catch (Exception e) {
 		out.print("SERVER ERROR");

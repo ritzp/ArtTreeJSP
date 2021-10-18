@@ -12,7 +12,7 @@ public class UserDao {
 	Connection conn = DBConnection.getConnection();
 	
 	public int insert(UserDto dto) {
-		String sql = "insert into creators_user values (?, ?, ?, ?, ?)";
+		String sql = "insert into arttree_user values (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, dto.getUserId());
@@ -29,7 +29,7 @@ public class UserDao {
 	}
 	
 	public UserDto select(String id) {
-		String sql = "select * from creators_user where (userId=? or email=?)";
+		String sql = "select * from arttree_user where (userId=? or email=?)";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, id);
@@ -52,7 +52,7 @@ public class UserDao {
 	}
 	
 	public UserDto selectForSignIn(String id, String password) {
-		String sql = "select * from creators_user where (userId=? or email=?) and password=?";
+		String sql = "select * from arttree_user where (userId=? or email=?) and password=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, id);
@@ -79,7 +79,7 @@ public class UserDao {
 	}
 	
 	public int selectForDeleteAccount(String userId, String password) {
-		String sql = "select count(*) from creators_user where userId=? and password=?";
+		String sql = "select count(*) from arttree_user where userId=? and password=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, userId);
@@ -98,7 +98,7 @@ public class UserDao {
 	}
 	
 	public int updateFromMyPageEdit(String userId, String nickname, String introduction) {
-		String sql = "update creators_user set nickname=?, introduction=? where userId=?";
+		String sql = "update arttree_user set nickname=?, introduction=? where userId=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, nickname);
@@ -112,7 +112,7 @@ public class UserDao {
 	}
 	
 	public int updateForChangingEmail(String userId, String email) {
-		String sql = "update creators_user set email=? where userId=?";
+		String sql = "update arttree_user set email=? where userId=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, email);
@@ -125,7 +125,7 @@ public class UserDao {
 	}
 	
 	public int updateForChangingPassword(String userId, String newPassword) {
-		String sql = "update creators_user set password=? where userId=?";
+		String sql = "update arttree_user set password=? where userId=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, newPassword);
@@ -137,8 +137,21 @@ public class UserDao {
 		return 0;
 	}
 	
+	public int updateForForgotPassword(String email, String newPassword) {
+		String sql = "update arttree_user set password=? where email=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, newPassword);
+			stat.setString(2,email);
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public int delete(String userId) {
-		String sql = "delete from creators_user where userId=?";
+		String sql = "delete from arttree_user where userId=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, userId);

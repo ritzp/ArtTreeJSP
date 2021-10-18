@@ -5,9 +5,8 @@
 if (request.getMethod().equals("POST")) {
 	UserDao userDao = new UserDao();
 	try {
-		int result = userDao.updateForChangingPassword(request.getParameter("userId"), request.getParameter("newPassword"));
-		System.out.println("Changed Pass - " + request.getParameter("userId"));
-		out.print("SUCCESS");
+		int result = userDao.updateForForgotPassword(request.getParameter("email"), request.getParameter("newPassword"));
+		out.print("SUCCESS" + result);
 	} catch (Exception e) {
 		out.print("SERVER ERROR");
 		e.printStackTrace();

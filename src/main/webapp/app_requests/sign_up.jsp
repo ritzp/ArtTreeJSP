@@ -16,6 +16,7 @@ if (request.getMethod().equals("POST")) {
 		userDto.setPassword(request.getParameter("password"));
 		userDto.setNickname(request.getParameter("nickname"));
 		userDto.setIntroduction(request.getParameter("introduction"));
+		System.out.println("Sign Up - " + userDto.getUserId());
 	} catch (Exception e) {
 		out.print("SERVER ERROR");
 		e.printStackTrace();

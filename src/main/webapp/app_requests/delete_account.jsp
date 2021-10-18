@@ -56,6 +56,7 @@ if (request.getMethod().equals("POST")) {
 			likeDao.deleteForAccountDelete(userId);
 			contentDao.deleteForAccountDelete(userId);
 			userDao.delete(userId);
+			System.out.println("Delete Account - " + userId);
 			out.print("SUCCESS");
 		} else {
 			out.print("FAILED");

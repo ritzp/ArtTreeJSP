@@ -34,7 +34,8 @@ if (request.getMethod().equals("POST")) {
 		for (int i=0; i<fileList.length; i++) {
 			fileList[i].delete();
 		}
-		contentDao.delete(request.getParameter("contentId"));
+		contentDao.delete(contentDto.getContentId());
+		System.out.println("Delete Content - " + contentDto.getContentId());
 		out.print("SUCCESS");
 	} catch (Exception e) {
 		out.print("SERVER ERROR");

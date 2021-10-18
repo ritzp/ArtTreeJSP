@@ -5,6 +5,7 @@
 <%@ page import="org.json.simple.JSONObject" %>
 <%
 if (request.getMethod().equals("POST")) {
+	System.out.println("Accessed");
 	UserDao userDao = new UserDao();
 	UserDto userDto = new UserDto();
 	JSONObject jsonObject = new JSONObject();
