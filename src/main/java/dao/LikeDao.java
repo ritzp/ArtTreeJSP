@@ -97,6 +97,18 @@ public class LikeDao {
 		return 0;
 	}
 	
+	public int deleteForContentDelete(String contentId) {
+		String sql = "delete from content_like where contentId=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, contentId);
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public int deleteForAccountDelete(String userId) {
 		String sql = "delete from content_like where userId=?";
 		try {

@@ -16,6 +16,7 @@ public class UserDto {
 	private String password;
 	private String nickname;
 	private String introduction;
+	private String creationDate;
 	
 	public String getUserId() {
 		return userId;
@@ -63,5 +64,13 @@ public class UserDto {
 	
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
+	}
+
+	public String getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
 	}
 }

@@ -61,6 +61,18 @@ public class CommentDao {
 		return 0;
 	}
 	
+	public int deleteForContentDelete(String contentId) {
+		String sql = "delete from content_comment where contentId=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sql);
+			stat.setString(1, contentId);
+			return stat.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public int deleteForAccountDelete(String userId) {
 		String sql = "delete from content_comment where userId=?";
 		try {

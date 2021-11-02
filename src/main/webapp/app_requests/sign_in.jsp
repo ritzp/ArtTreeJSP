@@ -5,7 +5,6 @@
 <%@ page import="org.json.simple.JSONObject" %>
 <%
 if (request.getMethod().equals("POST")) {
-	System.out.println("Accessed");
 	UserDao userDao = new UserDao();
 	UserDto userDto = new UserDto();
 	JSONObject jsonObject = new JSONObject();
@@ -14,9 +13,9 @@ if (request.getMethod().equals("POST")) {
 		if (userDto != null) {
 			jsonObject.put("message", "SUCCESS");
 			jsonObject.put("userId", userDto.getUserId());
-			jsonObject.put("password", userDto.getPassword());
 			jsonObject.put("nickname", userDto.getNickname());
 			
+			System.out.println("Sign In - " + request.getParameter("id"));
 			out.print(jsonObject);
 		} else {			
 			jsonObject.put("message", "FAILED");

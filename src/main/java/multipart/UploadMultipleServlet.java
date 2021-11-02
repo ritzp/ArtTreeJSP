@@ -58,6 +58,7 @@ public class UploadMultipleServlet extends HttpServlet {
 		String[] extension = request.getParameter("extensions").split("/");
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
+		String tag = request.getParameter("tag");
 		String userId = request.getParameter("userId");
 			
 		try {
@@ -99,6 +100,7 @@ public class UploadMultipleServlet extends HttpServlet {
 		contentDto.setExtension(request.getParameter("extensions"));
 		contentDto.setTitle(title);
 		contentDto.setDescription(description);
+		contentDto.setTag(tag);
 		contentDto.setViews(0);
 		contentDto.setUserId(userId);
 		contentDao.insert(contentDto);

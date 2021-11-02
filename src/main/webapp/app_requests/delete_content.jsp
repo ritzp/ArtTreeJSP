@@ -1,11 +1,15 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="dao.ContentDao" %>
 <%@ page import="dto.ContentDto" %>
+<%@ page import="dao.CommentDao" %>
+<%@ page import="dao.LikeDao" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.io.FilenameFilter" %>
 <%
 if (request.getMethod().equals("POST")) {
 	ContentDao contentDao = new ContentDao();
+	CommentDao commentDao = new CommentDao();
+	LikeDao likeDao = new LikeDao();
 	final ContentDto contentDto = contentDao.select(request.getParameter("contentId"));
 	String type = contentDto.getContentId().substring(0, 2);
 	String category = null;
@@ -35,6 +39,9 @@ if (request.getMethod().equals("POST")) {
 			fileList[i].delete();
 		}
 		contentDao.delete(contentDto.getContentId());
+		commentDao.deleteForContentDelete(contentDto.getContentId());
+		likeDao.deleteForContentDelete(contentDto.getContentId());
+		
 		System.out.println("Delete Content - " + contentDto.getContentId());
 		out.print("SUCCESS");
 	} catch (Exception e) {

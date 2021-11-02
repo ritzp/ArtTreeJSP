@@ -57,6 +57,7 @@ public class UploadServlet extends HttpServlet {
 		String extension = request.getParameter("extension");
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
+		String tag = request.getParameter("tag");
 		String userId = request.getParameter("userId");
 			
 		try {
@@ -95,6 +96,7 @@ public class UploadServlet extends HttpServlet {
 		contentDto.setExtension(extension);
 		contentDto.setTitle(title);
 		contentDto.setDescription(description);
+		contentDto.setTag(tag);
 		contentDto.setViews(0);
 		contentDto.setUserId(userId);
 		contentDao.insert(contentDto);

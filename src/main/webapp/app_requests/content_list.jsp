@@ -21,6 +21,12 @@ if (request.getMethod().equals("POST")) {
 			contentList = contentDao.selectForListByCategory(keyword);
 		} else if (searchMethod.equals("search")) {
 			contentList = contentDao.selectForListByKeyword(keyword);
+		} else if (searchMethod.equals("home")) {
+			contentList = contentDao.selectForHome();
+		} else if (searchMethod.equals("liked")) {
+			contentList = contentDao.selectForListByLiked(keyword);
+		} else if (searchMethod.equals("subscriptions")) {
+			contentList = contentDao.selectForListBySubscriptions(keyword);
 		} else {
 			contentList = contentDao.selectForList();
 		}
@@ -35,7 +41,9 @@ if (request.getMethod().equals("POST")) {
 		
 			JSONObject _jsonObject = new JSONObject();
 			_jsonObject.put("contentId", contentList.get(i).getContentId());
+			_jsonObject.put("extension", contentList.get(i).getExtension());
 			_jsonObject.put("title", contentList.get(i).getTitle());
+			_jsonObject.put("tag", contentList.get(i).getTag());
 			_jsonObject.put("views", contentList.get(i).getViews());
 			_jsonObject.put("likes", likeDao.getLikes(contentList.get(i).getContentId()));
 			_jsonObject.put("userId", userDto.getUserId());

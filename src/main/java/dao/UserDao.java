@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import util.DBConnection;
+import util.PasswordEncryptor;
 import dto.UserDto;
 
 public class UserDao {
 	Connection conn = DBConnection.getConnection();
 	
 	public int insert(UserDto dto) {
-		String sql = "insert into arttree_user values (?, ?, ?, ?, ?)";
+		String sql = "insert into arttree_user values (?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, dto.getUserId());
@@ -20,6 +21,7 @@ public class UserDao {
 			stat.setString(3, dto.getPassword());
 			stat.setString(4, dto.getNickname());
 			stat.setString(5, dto.getIntroduction());
+			stat.setString(6, dto.getCreationDate());
 			return stat.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -40,7 +42,7 @@ public class UserDao {
 			while (result.next()) {
 				dto.setUserId(result.getString(1));
 				dto.setEmail(result.getString(2));
-				dto.setPassword(result.getString(3));
+				dto.setPassword(null);
 				dto.setNickname(result.getString(4));
 				dto.setIntroduction(result.getString(5));
 			}
@@ -52,19 +54,44 @@ public class UserDao {
 	}
 	
 	public UserDto selectForSignIn(String id, String password) {
+		String date = null;
+
+		String sqlForDate = "select creationDate from artTree_user where userId=? or email=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sqlForDate);
+			stat.setString(1, id);
+			stat.setString(2, id);
+			ResultSet result = stat.executeQuery();
+
+			if (result.next()) {
+				date = result.getString(1);
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (date == null) {
+			return null;
+		}
+		
+		PasswordEncryptor encryptor = new PasswordEncryptor();
+		String encPass = encryptor.encrypt(date, password);
+		
 		String sql = "select * from arttree_user where (userId=? or email=?) and password=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, id);
 			stat.setString(2, id);
-			stat.setString(3, password);
+			stat.setString(3, encPass);
 			ResultSet result = stat.executeQuery();
 
 			UserDto dto = new UserDto();
 			if (result.next()) {
 				dto.setUserId(result.getString(1));
 				dto.setEmail(result.getString(2));
-				dto.setPassword(result.getString(3));
+				dto.setPassword(null);
 				dto.setNickname(result.getString(4));
 				dto.setIntroduction(result.getString(5));
 				return dto;
@@ -79,11 +106,36 @@ public class UserDao {
 	}
 	
 	public int selectForDeleteAccount(String userId, String password) {
+		String date = null;
+
+		String sqlForDate = "select creationDate from artTree_user where userId=? or email=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sqlForDate);
+			stat.setString(1, userId);
+			stat.setString(2, userId);
+			ResultSet result = stat.executeQuery();
+
+			if (result.next()) {
+				date = result.getString(1);
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (date == null) {
+			return 0;
+		}
+		
+		PasswordEncryptor encryptor = new PasswordEncryptor();
+		String encPass = encryptor.encrypt(date, password);
+		
 		String sql = "select count(*) from arttree_user where userId=? and password=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, userId);
-			stat.setString(2, password);
+			stat.setString(2, encPass);
 			ResultSet result = stat.executeQuery();
 
 			int count = 0;
@@ -125,10 +177,34 @@ public class UserDao {
 	}
 	
 	public int updateForChangingPassword(String userId, String newPassword) {
+		String date = null;
+
+		String sqlForDate = "select creationDate from artTree_user where email=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sqlForDate);
+			stat.setString(1, userId);
+			ResultSet result = stat.executeQuery();
+
+			if (result.next()) {
+				date = result.getString(1);
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (date == null) {
+			return 0;
+		}
+		
+		PasswordEncryptor encryptor = new PasswordEncryptor();
+		String encPass = encryptor.encrypt(date, newPassword);
+		
 		String sql = "update arttree_user set password=? where userId=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
-			stat.setString(1, newPassword);
+			stat.setString(1, encPass);
 			stat.setString(2, userId);
 			return stat.executeUpdate();
 		} catch (SQLException e) {
@@ -138,11 +214,35 @@ public class UserDao {
 	}
 	
 	public int updateForForgotPassword(String email, String newPassword) {
+		String date = null;
+
+		String sqlForDate = "select creationDate from artTree_user where email=?";
+		try {
+			PreparedStatement stat = conn.prepareStatement(sqlForDate);
+			stat.setString(1, email);
+			ResultSet result = stat.executeQuery();
+
+			if (result.next()) {
+				date = result.getString(1);
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (date == null) {
+			return 0;
+		}
+		
+		PasswordEncryptor encryptor = new PasswordEncryptor();
+		String encPass = encryptor.encrypt(date, newPassword);
+		
 		String sql = "update arttree_user set password=? where email=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
-			stat.setString(1, newPassword);
-			stat.setString(2,email);
+			stat.setString(1, encPass);
+			stat.setString(2, email);
 			return stat.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

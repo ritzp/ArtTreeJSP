@@ -4,6 +4,7 @@
 <%@ page import="dto.ContentDto" %>
 <%@ page import="dao.CommentDao" %>
 <%@ page import="dao.LikeDao" %>
+<%@ page import="util.PasswordEncryptor" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.io.FilenameFilter" %>
 <%@ page import="java.util.ArrayList" %>

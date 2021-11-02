@@ -6,6 +6,7 @@ public class ContentDto {
 	private String userId;
 	private String title;
 	private String description;
+	private String tag;
 	private int views;
 	
 	public String getContentId() {
@@ -48,6 +49,14 @@ public class ContentDto {
 		this.description = description;
 	}
 	
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
 	public int getViews() {
 		return views;
 	}

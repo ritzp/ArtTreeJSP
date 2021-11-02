@@ -32,6 +32,7 @@ if (request.getMethod().equals("POST")) {
 	String[] extension = request.getParameter("extensions").split("/");
 	String title = request.getParameter("title");
 	String description = request.getParameter("description");
+	String tag = request.getParameter("tag");
 	String userId = request.getParameter("userId");
 		
 	try {
@@ -57,8 +58,7 @@ if (request.getMethod().equals("POST")) {
 			}
 			fos.close();
 			is.close();
-			System.out.println("/data/content/" + category + "/" + contentId + "." + extension[i]);
-	        System.out.println("Upload Done");
+			System.out.println("Upload - /data/content/" + category + "/" + contentId + "." + extension[i] + "-" + i);
 		}
 		out.print("SUCCESS");
 	} catch (Exception e) {
@@ -73,6 +73,7 @@ if (request.getMethod().equals("POST")) {
 	contentDto.setExtension(request.getParameter("extensions"));
 	contentDto.setTitle(title);
 	contentDto.setDescription(description);
+	contentDto.setTag(tag);
 	contentDto.setViews(0);
 	contentDto.setUserId(userId);
 	contentDao.insert(contentDto);
