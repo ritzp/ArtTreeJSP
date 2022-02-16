@@ -4,7 +4,7 @@
 <%@ page import="dto.ContentDto" %>
 <%@ page import="dao.CommentDao" %>
 <%@ page import="dao.LikeDao" %>
-<%@ page import="util.PasswordEncryptor" %>
+<%@ page import="dao.SubscribeDao" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.io.FilenameFilter" %>
 <%@ page import="java.util.ArrayList" %>
@@ -16,6 +16,7 @@ if (request.getMethod().equals("POST")) {
 	ContentDao contentDao = new ContentDao();
 	CommentDao commentDao = new CommentDao();
 	LikeDao likeDao = new LikeDao();
+	SubscribeDao subscribeDao = new SubscribeDao();
 	ArrayList<ContentDto> contentList = new ArrayList<>();
 	
 	try {
@@ -55,6 +56,7 @@ if (request.getMethod().equals("POST")) {
 			headerFile.delete();
 			commentDao.deleteForAccountDelete(userId);
 			likeDao.deleteForAccountDelete(userId);
+			subscribeDao.deleteForAccountDelete(userId);
 			contentDao.deleteForAccountDelete(userId);
 			userDao.delete(userId);
 			System.out.println("Delete Account - " + userId);

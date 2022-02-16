@@ -38,9 +38,9 @@ if (request.getMethod().equals("POST")) {
 		for (int i=0; i<fileList.length; i++) {
 			fileList[i].delete();
 		}
-		contentDao.delete(contentDto.getContentId());
 		commentDao.deleteForContentDelete(contentDto.getContentId());
 		likeDao.deleteForContentDelete(contentDto.getContentId());
+		contentDao.delete(contentDto.getContentId());
 		
 		System.out.println("Delete Content - " + contentDto.getContentId());
 		out.print("SUCCESS");

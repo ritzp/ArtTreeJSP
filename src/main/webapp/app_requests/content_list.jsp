@@ -43,7 +43,7 @@ if (request.getMethod().equals("POST")) {
 			_jsonObject.put("contentId", contentList.get(i).getContentId());
 			_jsonObject.put("extension", contentList.get(i).getExtension());
 			_jsonObject.put("title", contentList.get(i).getTitle());
-			_jsonObject.put("tag", contentList.get(i).getTag());
+			_jsonObject.put("description", contentList.get(i).getDescription());
 			_jsonObject.put("views", contentList.get(i).getViews());
 			_jsonObject.put("likes", likeDao.getLikes(contentList.get(i).getContentId()));
 			_jsonObject.put("userId", userDto.getUserId());

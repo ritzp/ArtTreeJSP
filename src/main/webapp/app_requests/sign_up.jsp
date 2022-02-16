@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="dao.UserDao" %>
 <%@ page import="dto.UserDto" %>
-<%@ page import="util.PasswordEncryptor" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
 <% 
@@ -12,13 +11,10 @@ if (request.getMethod().equals("POST")) {
 	String date = format.format(Calendar.getInstance().getTime());
 	
 	try {
-		PasswordEncryptor encryptor = new PasswordEncryptor();
-		String encPass = encryptor.encrypt(date, request.getParameter("password"));
-		
 		int method = Integer.parseInt(request.getParameter("method"));
 		userDto.setUserId(request.getParameter("userId"));
 		userDto.setEmail(request.getParameter("emailPhone"));
-		userDto.setPassword(encPass);
+		userDto.setPassword(request.getParameter("password"));
 		userDto.setNickname(request.getParameter("nickname"));
 		userDto.setIntroduction(request.getParameter("introduction"));
 		userDto.setCreationDate(date);

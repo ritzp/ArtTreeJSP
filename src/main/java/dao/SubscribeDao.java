@@ -60,7 +60,7 @@ Connection conn = DBConnection.getConnection();
 	}
 	
 	public int deleteForAccountDelete(String userId) {
-		String sql = "delete from content_like where subscribingUserId=? or subscribedUserId=?";
+		String sql = "delete from user_subscribe where subscribingUserId=? or subscribedUserId=?";
 		try {
 			PreparedStatement stat = conn.prepareStatement(sql);
 			stat.setString(1, userId);
